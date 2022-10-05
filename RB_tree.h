@@ -15,40 +15,8 @@ private:
     void preOrder(Node<T>*& N);
     void postOrder(Node<T>*& N);
     void graficar(Node<T>*& N, std::ofstream& f);
-    void leftRotation(Node<T>*& N) {
-        Node<T> * y = N -> pSon[1];
-        N -> pSon[1] = y -> pSon[0];
-        
-        if(y -> pSon[0]) (y -> pSon[0]) -> pSon[2] = N;
-        y -> pSon[2] = N -> pSon[2];
-        
-        if(!(N -> pSon[2])) // si N es raiz 
-            root = y; 
-        else if(N == ((N -> pSon[2]) -> pSon[0])) // si es hijo izquierdo 
-            (N -> pSon[2]) -> pSon[0] = y;
-        else                                      // si es hijo derecho 
-            (N -> pSon[2]) -> pSon[1] = y;
-
-        y -> pSon[0] = N;
-        N -> pSon[2] = y;
-    }
-    void rightRotation(Node<T>*& N) {
-        Node<T> * y = N -> pSon[0];
-        N -> pSon[0] = y -> pSon[1];
-        
-        if(y -> pSon[1]) (y -> pSon[1]) -> pSon[2] = N;
-        y -> pSon[2] = N -> pSon[2];
-        
-        if(!(N -> pSon[2])) // si N es raiz 
-            root = y; 
-        else if(N == ((N -> pSon[2]) -> pSon[0])) // si es hijo izquierdo 
-            (N -> pSon[2]) -> pSon[0] = y;
-        else                                      // si es hijo derecho 
-            (N -> pSon[2]) -> pSon[1] = y;
-
-        y -> pSon[1] = N;   
-        N -> pSon[2] = y;    
-    }
+    void leftRotation(Node<T>*& N);
+    void rightRotation(Node<T>*& N);
 public:
     RB_Tree():root(nullptr),size(0){}
     ~RB_Tree();
@@ -68,6 +36,72 @@ RB_Tree<T>::~RB_Tree()
                                 // falta iterativo
 }
 
+template<typename T>
+void RB_Tree<T>::leftRotation(Node<T>*& N) 
+{
+    Node<T> * y = N -> pSon[1];
+    N -> pSon[1] = y -> pSon[0];
+    
+    if(y -> pSon[0]) (y -> pSon[0]) -> pSon[2] = N;
+    y -> pSon[2] = N -> pSon[2];
+    
+    if(!(N -> pSon[2])) // si N es raiz 
+        root = y; 
+    else if(N == ((N -> pSon[2]) -> pSon[0])) // si es hijo izquierdo 
+        (N -> pSon[2]) -> pSon[0] = y;
+    else                                      // si es hijo derecho 
+        (N -> pSon[2]) -> pSon[1] = y;
+
+    y -> pSon[0] = N;
+    N -> pSon[2] = y;
+}
+
+template<typename T>
+void RB_Tree<T>::rightRotation(Node<T>*& N) 
+{
+    Node<T> * y = N -> pSon[0];
+    N -> pSon[0] = y -> pSon[1];
+    
+    if(y -> pSon[1]) (y -> pSon[1]) -> pSon[2] = N;
+    y -> pSon[2] = N -> pSon[2];
+    
+    if(!(N -> pSon[2])) // si N es raiz 
+        root = y; 
+    else if(N == ((N -> pSon[2]) -> pSon[0])) // si es hijo izquierdo 
+        (N -> pSon[2]) -> pSon[0] = y;
+    else                                      // si es hijo derecho 
+        (N -> pSon[2]) -> pSon[1] = y;
+
+    y -> pSon[1] = N;   
+    N -> pSon[2] = y;    
+}
+
+template<typename T>
+void RB_Tree<T>::insert(T v)
+{
+    Node<T>* z = new Node<T>(v);
+    Node<T>* y = nullptr;
+    Node<T>* x = root;
+    while(x)
+    {
+        y = x;
+        if(z->value < x->value)
+            x = x->pSon[0];
+        else
+            x = x->pSon[1];
+    }
+    z->pSon[2] = y;
+    if(!y)
+        root = z;
+    else if(z->value < y->value)
+        y->pSon[0] = z;
+    else
+        y->pSon[1] = z;
+    z->pSon[0] = nullptr;
+    z->pSon[1] = nullptr;
+    z->col = 1;
+    insertFixup(z);
+}
 
 
 #endif
