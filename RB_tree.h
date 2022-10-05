@@ -15,13 +15,13 @@ private:
     void preOrder(Node<T>*& N);
     void postOrder(Node<T>*& N);
     void graficar(Node<T>*& N, std::ofstream& f);
-    void leftRotation(Node<T>*& N);
-    void rightRotation(Node<T>*& N);
+    void leftRotation(Node<T>*& N);                 // implementar
+    void rightRotation(Node<T>*& N);                // implementar
 public:
     RB_Tree():root(nullptr),size(0){}
     ~RB_Tree();
-    void insert(T v);
-    void insertFixup(Node<T>*& N);
+    void insert(T v);                               // implementar
+    void insertFixup(Node<T>*& N);                  // implementar
     void inOrder();
     void postOrder();
     void preOrder();
