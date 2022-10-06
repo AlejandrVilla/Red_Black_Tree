@@ -32,7 +32,7 @@ public:
 template<typename T>
 RB_Tree<T>::~RB_Tree()
 {
-    root->autoMatate(root);     // recursivo
+    //root->autoMatate(root);     // recursivo
                                 // falta iterativo
 }
 
@@ -103,5 +103,45 @@ void RB_Tree<T>::insert(T v)
     insertFixup(z);
 }
 
+template <typename T>
+void RB_Tree<T>::insertFixup(Node<T>* &a){
+    Node<T> *y; // Tio
+    while((a->pSon[2])->col){
+        if(a->pSon[2] == a->pSon[2]->pSon[2]->pSon[0]){
+            y = a->pSon[2]->pSon[2]->pSon[1]; //Tio derecho
+            if(y->col){
+                y->col = 0;
+                a->pSon[2]->col = 0;
+                a->pSon[2]->pSon[2]->col = 1;
+                a = a->pSon[2]->pSon[2];
+            }else{
+                if(a == a->pSon[2]->pSon[1]){
+                    a = a->pSon[2];
+                    leftRotation(a);
+                }
+                a->pSon[2]->col = 0;
+                a->pSon[2]->pSon[2]->col = 1;
+                rightRotation(a->pSon[2]->pSon[2]);
+            }
+        }else{
+            y = a->pSon[2]->pSon[2]->pSon[0]; //Tio iszquierdo
+            if(y->col){
+                a->pSon[2]->col = 0;
+                a->pSon[2]->pSon[2]->col = 1;
+                a = a->pSon[2]->pSon[2];
+            }else{
+                if(a == a->pSon[2]->pSon[0]){
+                    a = a->pSon[2];
+                    rightRotation(a);
+                }
+                a->pSon[2]->col = 0;
+                a->pSon[2]->pSon[2]->col = 1;
+                leftRotation(a->pSon[2]->pSon[2]);
+            }
+        }
+        if(a==root) break;
+    }
+    root->col = 0;
+}
 
 #endif
