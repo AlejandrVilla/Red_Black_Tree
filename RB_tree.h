@@ -16,8 +16,8 @@ private:
     void preOrder(Node<T>*& N);
     void postOrder(Node<T>*& N);
     void graficar(Node<T>*& N, std::ofstream& f);
-    void leftRotation(Node<T>*& N);
-    void rightRotation(Node<T>*& N);
+    void leftRotation(Node<T>* N);
+    void rightRotation(Node<T>* N);
 public:
     RB_Tree():root(nullptr),size(0){}
     ~RB_Tree();
@@ -86,7 +86,7 @@ void RB_Tree<T>::postOrder( Node<T>*& N )
 }
 
 template<typename T>
-void RB_Tree<T>::leftRotation(Node<T>*& N) 
+void RB_Tree<T>::leftRotation(Node<T>* N) 
 {
     Node<T>* y = N -> pSon[1];
     N -> pSon[1] = y -> pSon[0];
@@ -106,17 +106,13 @@ void RB_Tree<T>::leftRotation(Node<T>*& N)
 }
 
 template<typename T>
-void RB_Tree<T>::rightRotation(Node<T>*& N) 
+void RB_Tree<T>::rightRotation(Node<T>* N) 
 {
-    // std::cout<<N->value<<' '<<N->pSon[0]->value<<' '<<N->pSon[0]->pSon[0]->value<<'\n';
     Node<T>* y = N -> pSon[0];
     N -> pSon[0] = y -> pSon[1];
+
     if(y -> pSon[1]) (y -> pSon[1]) -> pSon[2] = N;
-
-    if(!N->pSon[2]) std::cout<<N->pSon[2]<<" \n";
-
     y -> pSon[2] = N -> pSon[2];
-    std::cout<<N->value<<'\n';
     
     if(!(N -> pSon[2])) // si N es raiz 
         root = y; 
@@ -180,7 +176,6 @@ void RB_Tree<T>::insertFixup(Node<T>* &a){
                 }
                 a->pSon[2]->col = 0;
                 a->pSon[2]->pSon[2]->col = 1;
-            std::cout<<a->value<<'\n';  
                 rightRotation(a->pSon[2]->pSon[2]);
             }
         }
