@@ -21,13 +21,13 @@ Node<T>::Node(T v)
     col = 0;
 }
 
-// template<typename T>
-// void autoMatate(Node<T>*& N)
-// {
-//     if(!p) return;
-//     autoMatate(N->pSon[0]);
-//     autoMatate(N->pSon[1]);
-//     delete p;
-// }
+template<typename T>
+void autoMatate(Node<T>*& N)
+{
+    if(!N) return;
+    autoMatate(N->pSon[0]);
+    autoMatate(N->pSon[1]);
+    delete N;
+}
 
 #endif

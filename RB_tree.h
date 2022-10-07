@@ -2,6 +2,7 @@
 #define RB_TREE
 
 #include <fstream>
+#include <iostream>
 #include "node.h"
 
 template<typename T>
@@ -32,14 +33,62 @@ public:
 template<typename T>
 RB_Tree<T>::~RB_Tree()
 {
-    //root->autoMatate(root);     // recursivo
+    // root->autoMatate(root);     // recursivo
                                 // falta iterativo
+}
+
+template<typename T>
+void RB_Tree<T>::inOrder()
+{
+    inOrder( root );
+    std::cout<<'\n';
+}
+
+template<typename T>
+void RB_Tree<T>::inOrder( Node<T>*& N )
+{
+    if( !N ) return;
+    inOrder( N->pSon[0] );
+    std::cout<<N->value<<' ';
+    inOrder( N->pSon[1] );
+}
+
+template<typename T>
+void RB_Tree<T>::preOrder()
+{
+    preOrder( root );
+    std::cout<<'\n';
+}
+
+template<typename T>
+void RB_Tree<T>::preOrder( Node<T>*& N )
+{
+    if( !N ) return;
+    std::cout<<N->value<<' ';
+    preOrder( N->pSon[0] );
+    preOrder( N->pSon[1] );
+}
+
+template<typename T>
+void RB_Tree<T>::postOrder()
+{
+    postOrder( root );
+    std::cout<<'\n';
+}
+
+template<typename T>
+void RB_Tree<T>::postOrder( Node<T>*& N )
+{
+    if( !N ) return;
+    postOrder( N->pSon[0] );
+    postOrder( N->pSon[1] );
+    std::cout<<N->value<<' ';
 }
 
 template<typename T>
 void RB_Tree<T>::leftRotation(Node<T>*& N) 
 {
-    Node<T> * y = N -> pSon[1];
+    Node<T>* y = N -> pSon[1];
     N -> pSon[1] = y -> pSon[0];
     
     if(y -> pSon[0]) (y -> pSon[0]) -> pSon[2] = N;
@@ -59,11 +108,15 @@ void RB_Tree<T>::leftRotation(Node<T>*& N)
 template<typename T>
 void RB_Tree<T>::rightRotation(Node<T>*& N) 
 {
-    Node<T> * y = N -> pSon[0];
+    // std::cout<<N->value<<' '<<N->pSon[0]->value<<' '<<N->pSon[0]->pSon[0]->value<<'\n';
+    Node<T>* y = N -> pSon[0];
     N -> pSon[0] = y -> pSon[1];
-    
     if(y -> pSon[1]) (y -> pSon[1]) -> pSon[2] = N;
+
+    if(!N->pSon[2]) std::cout<<N->pSon[2]<<" \n";
+
     y -> pSon[2] = N -> pSon[2];
+    std::cout<<N->value<<'\n';
     
     if(!(N -> pSon[2])) // si N es raiz 
         root = y; 
@@ -106,31 +159,44 @@ void RB_Tree<T>::insert(T v)
 template <typename T>
 void RB_Tree<T>::insertFixup(Node<T>* &a){
     Node<T> *y; // Tio
-    while((a->pSon[2])->col){
-        if(a->pSon[2] == a->pSon[2]->pSon[2]->pSon[0]){
+    while(a->pSon[2] && a->pSon[2]->col)
+    {
+        if(a->pSon[2]->pSon[2] && a->pSon[2] == a->pSon[2]->pSon[2]->pSon[0])
+        {
             y = a->pSon[2]->pSon[2]->pSon[1]; //Tio derecho
-            if(y->col){
+            if(y && y->col)         // existe tio y es rojo
+            {
                 y->col = 0;
                 a->pSon[2]->col = 0;
                 a->pSon[2]->pSon[2]->col = 1;
                 a = a->pSon[2]->pSon[2];
-            }else{
-                if(a == a->pSon[2]->pSon[1]){
+            }
+            else
+            {
+                if(a == a->pSon[2]->pSon[1])
+                {
                     a = a->pSon[2];
                     leftRotation(a);
                 }
                 a->pSon[2]->col = 0;
                 a->pSon[2]->pSon[2]->col = 1;
+            std::cout<<a->value<<'\n';  
                 rightRotation(a->pSon[2]->pSon[2]);
             }
-        }else{
+        }
+        else if(a->pSon[2]->pSon[2] && a->pSon[2] == a->pSon[2]->pSon[2]->pSon[1])
+        {
             y = a->pSon[2]->pSon[2]->pSon[0]; //Tio iszquierdo
-            if(y->col){
+            if(y && y->col)
+            {
                 a->pSon[2]->col = 0;
                 a->pSon[2]->pSon[2]->col = 1;
                 a = a->pSon[2]->pSon[2];
-            }else{
-                if(a == a->pSon[2]->pSon[0]){
+            }
+            else
+            {
+                if(a == a->pSon[2]->pSon[0])
+                {
                     a = a->pSon[2];
                     rightRotation(a);
                 }
@@ -139,7 +205,7 @@ void RB_Tree<T>::insertFixup(Node<T>* &a){
                 leftRotation(a->pSon[2]->pSon[2]);
             }
         }
-        if(a==root) break;
+        // if(a==root) break;
     }
     root->col = 0;
 }

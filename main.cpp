@@ -6,9 +6,10 @@ using namespace std;
 int main()
 {
     RB_Tree<int> RB;
-    for(int i=1 ; i<pow(10,5) ; i++)
+    int n = pow(10,1);
+    for(int i=n ; i>0 ; --i)
         RB.insert(i);
-    // RB.inOrder();
-    // RB.preOrder();
-    // RB.postOrder();
+    RB.inOrder();
+    RB.preOrder();
+    RB.postOrder();
 }
