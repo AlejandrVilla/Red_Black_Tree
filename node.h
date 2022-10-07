@@ -22,7 +22,7 @@ Node<T>::Node(T v)
 }
 
 template<typename T>
-void autoMatate(Node<T>*& N)
+void Node<T>::autoMatate(Node<T>*& N)
 {
     if(!N) return;
     autoMatate(N->pSon[0]);

@@ -21,8 +21,8 @@ private:
 public:
     RB_Tree():root(nullptr),size(0){}
     ~RB_Tree();
-    void insert(T v);                               // implementar
-    void insertFixup(Node<T>*& N);                  // implementar
+    void insert(T v);                               
+    void insertFixup(Node<T>*& N);                  
     void inOrder();
     void postOrder();
     void preOrder();
@@ -33,7 +33,7 @@ public:
 template<typename T>
 RB_Tree<T>::~RB_Tree()
 {
-    // root->autoMatate(root);     // recursivo
+    root->autoMatate(root);     // recursivo
                                 // falta iterativo
 }
 
