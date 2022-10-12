@@ -10,7 +10,7 @@ public:
     Node<T>* pSon[3];       // izq, der, padre
     bool col;               // color 0 negro, 1 rojo
     Node(T v);
-    void autoMatate(Node<T>*& N);
+    void autoMatate(Node<T>* N);
 };
 
 template<typename T>
@@ -22,9 +22,10 @@ Node<T>::Node(T v)
 }
 
 template<typename T>
-void Node<T>::autoMatate(Node<T>*& N)
+void Node<T>::autoMatate(Node<T>* N)
 {
     if(!N) return;
+    // std::cout<<"hola\n";
     autoMatate(N->pSon[0]);
     autoMatate(N->pSon[1]);
     delete N;

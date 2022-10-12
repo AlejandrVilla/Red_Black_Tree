@@ -26,7 +26,9 @@ public:
     void inOrder();
     void postOrder();
     void preOrder();
-    void search(T v);
+    int search(T v);                    // devuelve la cantidad de comparaciones hasta encontrar
+    void clear();
+    int getSize(){ return size; }
     void graficar(std::string dir); 
 };
 
@@ -35,6 +37,7 @@ RB_Tree<T>::~RB_Tree()
 {
     root->autoMatate(root);     // recursivo
                                 // falta iterativo
+    // std::cout<<"murio\n";
 }
 
 template<typename T>
@@ -150,6 +153,7 @@ void RB_Tree<T>::insert(T v)
     z->pSon[1] = nullptr;
     z->col = 1;
     insertFixup(z);
+    size++;
 }
 
 template <typename T>
@@ -203,6 +207,33 @@ void RB_Tree<T>::insertFixup(Node<T>* &a){
         // if(a==root) break;
     }
     root->col = 0;
+}
+
+template<typename T>
+int RB_Tree<T>::search(T v)
+{
+    Node<T>* tmp = root;
+    int c=0;
+    while(tmp)
+    {
+        c++;
+        if(tmp->value == v)
+            return c;
+        if(v < tmp->value)
+            tmp = tmp->pSon[0];
+        else
+            tmp = tmp->pSon[1];
+    }
+    return -1;
+}
+
+template<typename T>
+void RB_Tree<T>::clear()
+{
+    root->autoMatate(root);
+    size = 0;
+    root = nullptr;
+    // std::cout<<"murio\n";
 }
 
 #endif
