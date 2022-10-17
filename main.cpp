@@ -31,6 +31,7 @@ int main()
         for(int j=1 ; j<=n ; ++j)
             RB.insert(j);
         int num = 1 + rand() % (n/10);
+        // int num = 50;
         int comp = RB.search(num);
         res.push_back(make_pair(n,comp));
         RB.clear();

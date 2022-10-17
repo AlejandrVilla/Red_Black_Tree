@@ -36,8 +36,6 @@ template<typename T>
 RB_Tree<T>::~RB_Tree()
 {
     root->autoMatate(root);     // recursivo
-                                // falta iterativo
-    // std::cout<<"murio\n";
 }
 
 template<typename T>
@@ -211,7 +209,7 @@ void RB_Tree<T>::insertFixup(Node<T>* &a){
 }
 
 template<typename T>
-int RB_Tree<T>::search(T v)
+int RB_Tree<T>::search(T v)  // log(n)
 {
     Node<T>* tmp = root;
     int c=0;
@@ -234,7 +232,6 @@ void RB_Tree<T>::clear()
     root->autoMatate(root);
     size = 0;
     root = nullptr;
-    // std::cout<<"murio\n";
 }
 
 #endif

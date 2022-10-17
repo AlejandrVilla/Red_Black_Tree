@@ -4,7 +4,6 @@
 template<typename T>
 class Node
 {
-private:
 public:
     T value;
     Node<T>* pSon[3];       // izq, der, padre
@@ -25,7 +24,6 @@ template<typename T>
 void Node<T>::autoMatate(Node<T>* N)
 {
     if(!N) return;
-    // std::cout<<"hola\n";
     autoMatate(N->pSon[0]);
     autoMatate(N->pSon[1]);
     delete N;
