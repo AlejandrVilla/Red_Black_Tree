@@ -170,7 +170,7 @@ void RB_Tree<T>::insertFixup(Node<T>* &a){
                 a->pSon[2]->col = 0;
                 a->pSon[2]->pSon[2]->col = 1;
                 a = a->pSon[2]->pSon[2];
-            }
+            }   
             else
             {
                 if(a == a->pSon[2]->pSon[1])
@@ -187,7 +187,8 @@ void RB_Tree<T>::insertFixup(Node<T>* &a){
         {
             y = a->pSon[2]->pSon[2]->pSon[0]; //Tio iszquierdo
             if(y && y->col)
-            {
+            {   
+                y -> col = 0;
                 a->pSon[2]->col = 0;
                 a->pSon[2]->pSon[2]->col = 1;
                 a = a->pSon[2]->pSon[2];
